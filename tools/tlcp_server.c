@@ -422,8 +422,11 @@ restart:
 		if (www) {
 			fwrite(buf, 1, len, stdout);
 			fflush(stdout);
-			if (tls_server_www_append(&www_request, &www_request_len, &www_request_cap,
-				(uint8_t *)buf, len) != 1) {
+
+			strcpy(buf, "<html><body><h1>Hello</h1></body></html>");
+			len = strlen(buf);
+
+			if (tls_server_www_append(&www_request, &www_request_len, &www_request_cap, (uint8_t *)buf, len) != 1) {
 				fprintf(stderr, "%s: append HTTP request failure\n", prog);
 				tls_socket_close(conn.sock);
 				goto end;
